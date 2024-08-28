@@ -1,1 +1,70 @@
-<h1>トップページ</h1>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PR PODCASTS</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style.css' %}" />
+  </head>
+  <body>
+    <main>
+      <div class="heading">
+        <h1>PR PODCASTS</h1>
+      </div>
+      <div class="main-contents">
+        <h2>今日のポッドキャストを再生する</h2>
+        <div class="control">
+          <button class="play-btn">
+            <img src="{% static 'image/play.png' %}" alt="再生" />
+          </button>
+        </div>
+        <ul class="list">
+          <li class="item">
+            <div class="item-main">
+              <div class="left">
+                <img src="" alt="" class="main-image" />
+              </div>
+              <div class="right">
+                <h3 class="title">
+                  4月1日を夢の日に。1100社超が「夢」の発信に参加表明
+                </h3>
+                <p class="sub-title">
+                  4月1日、企業の夢がプレスリリースで、個人の夢がSNSで順次発信されます。
+                </p>
+                <p class="company-name">株式会社PR TIMES</p>
+              </div>
+              <div class="bottom">
+                <div class="display-btn" id="toggle-btn">
+                  <p>要約を表示する</p>
+                </div>
+              </div>
+            </div>
+            <div class="item-desc" id="toggle-element">
+              <p class="desc-text">
+                要約した文章です要約した文章です要約した文章です要約した文章です要約した文章です要約した文章です要約した文章です要約した文章です要約した文章です要約した文章です要約した文章です
+                要約した文章です要約した文章です要約した文章です要約した文章です要約した文章です要約した文章です要約した文章です要約した文章です要約した文章です要約した文章です要約した文章です
+                要約した文章です要約した文章です要約した文章です要約した文章です要約した文章です要約した文章です要約した文章です要約した文章です要約した文章です要約した文章です要約した文章です
+                要約した文章です要約した文章です要約した文章です要約した文章です要約した文章です要約した文章です要約した文章です要約した文章です要約した文章です要約した文章です要約した文章です
+              </p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </main>
+  </body>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const button = document.getElementById("toggle-btn");
+      const element = document.getElementById("toggle-element");
+
+      button.addEventListener("click", function () {
+        if (element.style.display === "none" || element.style.display === "") {
+          element.style.display = "block"; // 要素を表示
+        } else {
+          element.style.display = "none"; // 要素を非表示
+        }
+      });
+    });
+  </script>
+</html>
