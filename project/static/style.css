@@ -1,0 +1,117 @@
+body {
+  background: #f3f4f6;
+  padding-top: 16px;
+}
+
+main {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+  background: white;
+  border-radius: 16px;
+}
+
+h1 {
+  font-size: 40px;
+}
+
+h2 {
+  font-weight: 500;
+}
+
+h1,
+h2,
+.control {
+  text-align: center;
+}
+
+.control {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+  padding: 0;
+}
+
+h3 {
+  font-size: 24px;
+}
+
+.main-contents {
+  margin-top: 20px;
+}
+
+.sub-title {
+  font-size: 18px;
+  margin-top: 6px;
+}
+
+.play-btn {
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  margin-top: 10px;
+  width: 70px;
+  height: 70px;
+  background: #284c79;
+  border-radius: 35px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.play-btn > img {
+  width: 30px;
+  height: 30px;
+}
+
+.list {
+  border-top: 1px solid rgb(216, 216, 216);
+  padding: 0 !important;
+}
+
+.item {
+  padding: 20px 0;
+  width: 100%;
+  list-style: none;
+  border-bottom: 1px solid rgb(216, 216, 216);
+}
+
+.item-main {
+  display: flex;
+  position: relative;
+  gap: 30px;
+}
+
+.main-image {
+  width: 150px;
+  height: 150px;
+  background: gray;
+}
+
+.bottom {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+.display-btn {
+  padding: 10px;
+  color: #284c79;
+  cursor: pointer;
+}
+
+.item-desc {
+  padding: 20px;
+  padding-bottom: 0;
+}
+
+#toggle-element {
+  display: none;
+}
