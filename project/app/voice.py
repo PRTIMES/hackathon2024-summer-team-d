@@ -43,7 +43,7 @@ def extract_body_from_prtimes():
         "Authorization": f"Bearer {ACCESS_TOKEN}",
     }
     params = {
-        "per_page": 1,
+        "per_page": 6,
     }
     res = requests.get(url, headers=headers, params=params)
     bodies = []
