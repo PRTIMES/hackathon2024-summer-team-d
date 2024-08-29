@@ -1,5 +1,5 @@
 import os
-
+from .jounrnal import get_api_data
 import requests
 from django.http import HttpResponse
 from django.shortcuts import render
@@ -8,8 +8,8 @@ from django.shortcuts import render
 
 
 def indexfunc(request):
-    return render(request, "index.html")
-
+    res = get_api_data()
+    return render(request, "index.html", {"releases": res})
 
 def convert_json_to_html(data):
     """

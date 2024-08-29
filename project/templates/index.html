@@ -1,10 +1,10 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PR PODCASTS</title>
-    {% load static %}
     <link rel="stylesheet" href="{% static 'style.css' %}" />
   </head>
   <body>
@@ -20,51 +20,62 @@
           </button>
         </div>
         <ul class="list">
+          {% for post in releases %}
           <li class="item">
             <div class="item-main">
               <div class="left">
-                <img src="" alt="" class="main-image" />
+                <img src="{{ post.main_image }}" alt="" class="main-image" />
               </div>
               <div class="right">
-                <h3 class="title">
-                  4月1日を夢の日に。1100社超が「夢」の発信に参加表明
-                </h3>
-                <p class="sub-title">
-                  4月1日、企業の夢がプレスリリースで、個人の夢がSNSで順次発信されます。
-                </p>
-                <p class="company-name">株式会社PR TIMES</p>
+                <a href="{{ post.url }}" class="title" target="_blank">
+                  {{ post.title }}
+                </a>
+                <p class="sub-title">{{ post.subtitle }}</p>
+                <p class="company-name">{{ post.company_name }}</p>
               </div>
               <div class="bottom">
-                <div class="display-btn" id="toggle-btn">
+                <div class="display-btn">
                   <p>要約を表示する</p>
                 </div>
               </div>
             </div>
-            <div class="item-desc" id="toggle-element">
-              <p class="desc-text">
+            <div class="item-desc">
+              <!-- <p class="desc-text">
                 要約した文章です要約した文章です要約した文章です要約した文章です要約した文章です要約した文章です要約した文章です要約した文章です要約した文章です要約した文章です要約した文章です
                 要約した文章です要約した文章です要約した文章です要約した文章です要約した文章です要約した文章です要約した文章です要約した文章です要約した文章です要約した文章です要約した文章です
                 要約した文章です要約した文章です要約した文章です要約した文章です要約した文章です要約した文章です要約した文章です要約した文章です要約した文章です要約した文章です要約した文章です
                 要約した文章です要約した文章です要約した文章です要約した文章です要約した文章です要約した文章です要約した文章です要約した文章です要約した文章です要約した文章です要約した文章です
-              </p>
+              </p> -->
+              {{ post.body }}
             </div>
           </li>
+          {% endfor %}
         </ul>
+        <ul class="data-list"></ul>
       </div>
     </main>
   </body>
   <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const button = document.getElementById("toggle-btn");
-      const element = document.getElementById("toggle-element");
+    document.addEventListener("DOMContentLoaded", function() {
+    // すべての.toggle-btn要素を取得
+    const buttons = document.querySelectorAll(".display-btn");
 
-      button.addEventListener("click", function () {
-        if (element.style.display === "none" || element.style.display === "") {
-          element.style.display = "block"; // 要素を表示
-        } else {
-          element.style.display = "none"; // 要素を非表示
-        }
-      });
+    buttons.forEach(button => {
+        button.addEventListener("click", function() {
+            // 現在のボタンの次の.siblingの.item-descを取得
+            const itemDesc = this.closest('.item-main').nextElementSibling;
+
+            // 表示・非表示を切り替え
+            if (itemDesc.style.display === "none" || itemDesc.style.display === "") {
+                itemDesc.style.display = "block"; // 要素を表示
+                this.querySelector('p').textContent = '要約を非表示にする';
+            } else {
+                itemDesc.style.display = "none"; // 要素を非表示
+                this.querySelector('p').textContent = '要約を表示する';
+            }
+        });
     });
+});
+
   </script>
 </html>
