@@ -21,7 +21,7 @@ def summarize(client, text):
             },
             {
                 "role": "user",
-                "content": f"次の文章を要約してください:\n\n{text}",
+                "content": f"文章を途切れることなく200字程度で要約してください:\n\n{text}",
             },
         ],
         max_tokens=240,
@@ -45,6 +45,7 @@ def extract_body_from_prtimes():
         "per_page": 10,
     }
     res = requests.get(url, headers=headers, params=params)
+
     bodies = []
     for item in res.json():
         bodies.append(item["body"])
@@ -56,15 +57,17 @@ def summarize_prtimes_bodies(client):
     PR TIMES APIから取得した本文を要約する関数
     """
     bodies = extract_body_from_prtimes()
+    sample_body = bodies[5]
+    print(summarize(client, sample_body))
     summaries = []
-    for body in bodies:
-        summary = summarize(client, body)
-        summaries.append(summary)
+    # for body in bodies:
+    #     summary = summarize(client, body)
+    #     summaries.append(summary)
     return summaries
 
 
 # メイン処理
 client = init_openai()
 summaries = summarize_prtimes_bodies(client)
-for summary in summaries:
-    print(summary)
+# for summary in summaries:
+#     print(summary)
