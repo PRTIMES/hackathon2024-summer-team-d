@@ -64,8 +64,8 @@ def summarize_prtimes_bodies():
     """
     
     res = extract_body_from_prtimes()
-    for post in res:
-        post["items"] = summarize(post["body"])
+    # for post in res:
+    #     # post["items"] = summarize(post["body"])
     
     return res
 
