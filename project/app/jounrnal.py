@@ -12,8 +12,12 @@ def get_api_data():
         "Authorization": f"Bearer {ACCESS_TOKEN}",
     }
 
-    response = requests.get(url, headers=headers)
-
+    params = {
+        "per_page":10
+    }
+    
+    response = requests.get(url, headers=headers, params=params)
+    
     if response.status_code == 200:
         res = response.json()
     else:
