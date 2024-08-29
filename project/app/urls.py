@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import display_prtimes_data, indexfunc
+from .views import indexfunc
 
 urlpatterns = [
     path("index/", indexfunc, name="index"),
