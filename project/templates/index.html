@@ -15,9 +15,17 @@
       <div class="main-contents">
         <h2>今日のポッドキャストを再生する</h2>
         <div class="control">
-          <button class="play-btn">
-            <img src="{% static 'image/play.png' %}" alt="再生" />
+          <button class="play-btn" id="playButton">
+            <img src="{% static 'image/play.png' %}" alt="再生" id="play-icon" style="display: block;"/>
+            <img src="{% static 'image/stop.png' %}" alt="再生" id="stop-icon" style="display: none;"/>
           </button>
+          <audio id="audioPlayer">
+            <source
+              src="{% static 'audio/summary_0.mp3' %}"
+              type="audio/mpeg"
+            />
+            お使いのブラウザは音声要素をサポートしていません。
+          </audio>
         </div>
         <ul class="list">
           {% for post in releases %}
@@ -39,9 +47,7 @@
                 </div>
               </div>
             </div>
-            <div class="item-desc">
-              {{ post.items }}
-            </div>
+            <div class="item-desc">{{ post.items }}</div>
           </li>
           {% endfor %}
         </ul>
@@ -49,26 +55,45 @@
     </main>
   </body>
   <script>
-    document.addEventListener("DOMContentLoaded", function() {
-    // すべての.toggle-btn要素を取得
-    const buttons = document.querySelectorAll(".display-btn");
+    document.addEventListener("DOMContentLoaded", function () {
+      // すべての.toggle-btn要素を取得
+      const buttons = document.querySelectorAll(".display-btn");
 
-    buttons.forEach(button => {
-        button.addEventListener("click", function() {
-            // 現在のボタンの次の.siblingの.item-descを取得
-            const itemDesc = this.closest('.item-main').nextElementSibling;
+      buttons.forEach((button) => {
+        button.addEventListener("click", function () {
+          // 現在のボタンの次の.siblingの.item-descを取得
+          const itemDesc = this.closest(".item-main").nextElementSibling;
 
-            // 表示・非表示を切り替え
-            if (itemDesc.style.display === "none" || itemDesc.style.display === "") {
-                itemDesc.style.display = "block"; // 要素を表示
-                this.querySelector('p').textContent = '要約を非表示にする';
+          // 表示・非表示を切り替え
+          if (
+            itemDesc.style.display === "none" ||
+            itemDesc.style.display === ""
+          ) {
+            itemDesc.style.display = "block"; // 要素を表示
+            this.querySelector("p").textContent = "要約を非表示にする";
+          } else {
+            itemDesc.style.display = "none"; // 要素を非表示
+            this.querySelector("p").textContent = "要約を表示する";
+          }
+        });
+      });
+    });
+
+    const playButton = document.getElementById('playButton');
+        const audioPlayer = document.getElementById('audioPlayer');
+        const playIcon = document.getElementById("play-icon")
+        const stopIcon = document.getElementById("stop-icon")
+
+        playButton.addEventListener('click', function() {
+            if (audioPlayer.paused) {
+                audioPlayer.play();
+                playIcon.style.display = "none"
+                stopIcon.style.display = "block"
             } else {
-                itemDesc.style.display = "none"; // 要素を非表示
-                this.querySelector('p').textContent = '要約を表示する';
+                audioPlayer.pause();
+                playIcon.style.display = "block"
+                stopIcon.style.display = "none"
             }
         });
-    });
-});
-
   </script>
 </html>

@@ -5,10 +5,9 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from .summary import summarize_prtimes_bodies
 
+# url = settings.MEDIA_URL + "project/app/outputs/summary_0.mp3"
+
 # Create your views here.
-
-# 要約データと
-
 def indexfunc(request):
     res = summarize_prtimes_bodies()
     context = {
