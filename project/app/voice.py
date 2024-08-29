@@ -1,8 +1,10 @@
 import os
+import django
 import requests
 from openai import OpenAI
 from pathlib import Path
-
+from pydub import AudioSegment
+from django.conf import settings
 
 def init_openai():
     client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
@@ -43,7 +45,7 @@ def extract_body_from_prtimes():
         "Authorization": f"Bearer {ACCESS_TOKEN}",
     }
     params = {
-        "per_page": 6,
+        "per_page": 2,
     }
     res = requests.get(url, headers=headers, params=params)
     bodies = []
@@ -72,14 +74,41 @@ def text_to_speech(client, text, file_path):
     response.stream_to_file(file_path)
 
 
+def combine_audio_files(input_files, output_file, silence_duration=1000):
+    """
+    複数の音声ファイルを1つのファイルに結合し、間に無音を挿入する関数
+    silence_duration: 挿入する無音の長さ（ミリ秒）
+    """
+    combined = AudioSegment.empty()
+    silence = AudioSegment.silent(duration=silence_duration)
+    
+    for i, file in enumerate(input_files):
+        audio = AudioSegment.from_mp3(file)
+        if i > 0:  # 最初のファイル以外の前に無音を挿入
+            combined += silence
+        combined += audio
+    
+    combined.export(output_file, format="mp3")
+
 # メイン処理
 client = init_openai()
 summaries = summarize_prtimes_bodies(client)
-output_dir = Path(__file__).parent / "outputs"
+output_dir = Path(__file__).parent.parent / "static/audio"
+# output_dir = Path(settings.BASE_DIR) / "static/audio"
 output_dir.mkdir(exist_ok=True)
 
+temp_files = []
+
+# 各サンプルテキストを音声ファイルに変換
 for i, summary in enumerate(summaries):
-    print(summary)
-    speech_file_path = output_dir / f"summary_{i}.mp3"
-    text_to_speech(client, summary, speech_file_path)
-    print(f"Audio saved to {speech_file_path}")
+    temp_file_path = output_dir / f"temp_{i}.mp3"
+    text_to_speech(client, summary, temp_file_path)
+    temp_files.append(temp_file_path)
+
+# 全ての音声ファイルを1つに結合
+final_output_path = output_dir / "combined_output.mp3"
+combine_audio_files(temp_files, final_output_path, silence_duration=2000)
+
+# 一時ファイルを削除
+for file in temp_files:
+    file.unlink()
