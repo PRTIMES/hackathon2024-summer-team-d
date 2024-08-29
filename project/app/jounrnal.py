@@ -12,13 +12,15 @@ def get_api_data():
         "Authorization": f"Bearer {ACCESS_TOKEN}",
     }
 
-    response = requests.get(url, headers=headers)
-
+    params = {
+        "per_page":2
+    }
+    
+    response = requests.get(url, headers=headers, params=params)
+    
     if response.status_code == 200:
         res = response.json()
     else:
         res = {}  # エラーハンドリング用に空の辞書を返す
-    
-    return res
 
-get_api_data()
+    return res
