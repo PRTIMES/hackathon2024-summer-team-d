@@ -13,7 +13,7 @@ def get_api_data():
     }
 
     params = {
-        "per_page":10
+        "per_page":2
     }
     
     response = requests.get(url, headers=headers, params=params)
@@ -22,7 +22,5 @@ def get_api_data():
         res = response.json()
     else:
         res = {}  # エラーハンドリング用に空の辞書を返す
-    
-    return res
 
-get_api_data()
+    return res

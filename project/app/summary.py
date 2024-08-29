@@ -8,10 +8,11 @@ def init_openai():
     return client
 
 
-def summarize(client, text):
+def summarize(text):
     """
     OpenAI APIを使ってテキストを要約する関数
     """
+    client = init_openai()
     response = client.chat.completions.create(
         model=os.getenv("OPENAI_MODEL"),  # 最新のモデルを使用
         messages=[
@@ -42,29 +43,32 @@ def extract_body_from_prtimes():
         "Authorization": f"Bearer {ACCESS_TOKEN}",
     }
     params = {
-        "per_page": 10,
+        "per_page": 2,
     }
     res = requests.get(url, headers=headers, params=params)
-    bodies = []
-    for item in res.json():
-        bodies.append(item["body"])
-    return bodies
+    
+    # bodies = []
+    # for item in res.json():
+    #     bodies.append(item["body"])
+    
+    if res.status_code == 200:
+        res = res.json()
+    else:
+        res = {}
+    return res
 
 
-def summarize_prtimes_bodies(client):
+def summarize_prtimes_bodies():
     """
     PR TIMES APIから取得した本文を要約する関数
     """
-    bodies = extract_body_from_prtimes()
-    summaries = []
-    for body in bodies:
-        summary = summarize(client, body)
-        summaries.append(summary)
-    return summaries
+    
+    res = extract_body_from_prtimes()
+    for post in res:
+        post["items"] = summarize(post["body"])
+    
+    return res
 
 
 # メイン処理
-client = init_openai()
-summaries = summarize_prtimes_bodies(client)
-for summary in summaries:
-    print(summary)
+# print(summarize_prtimes_bodies())
