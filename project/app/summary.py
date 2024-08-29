@@ -21,7 +21,7 @@ def summarize(client, text):
             },
             {
                 "role": "user",
-                "content": f"次の文章を要約してください:\n\n{text}",
+                "content": f"次の文章を途切れることなく要約してください:\n\n{text}",
             },
         ],
         max_tokens=240,
