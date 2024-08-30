@@ -1,4 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700;900&display=swap');
+
 body {
+  font-family: "Zen Kaku Gothic New", sans-serif;
   background: #f3f4f6;
   padding-top: 16px;
 }
@@ -16,11 +19,12 @@ a {
 }
 
 h1 {
-  font-size: 40px;
+  font-size: 54px;
 }
 
 h2 {
   font-weight: 500;
+  color: #284c79;
 }
 
 h1,
@@ -45,16 +49,23 @@ p {
 
 .title {
   font-size: 24px;
-  font-weight: bold;
+  font-weight: 700;
   color: black;
 }
 
+.title:hover {
+  color: #284c79;
+}
+
 .main-contents {
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
 .sub-title {
   font-size: 18px;
+  margin-top: 6px;
+}
+.company-name {
   margin-top: 6px;
 }
 
@@ -70,7 +81,15 @@ p {
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: all .05s ;
+
 }
+
+.play-btn:hover {
+  transform: scale(1.05);
+  transition: all .05s ;
+}
+
 
 .play-btn > img {
   width: 30px;
@@ -112,6 +131,7 @@ p {
   padding: 10px;
   color: #284c79;
   cursor: pointer;
+  font-weight: 500;
 }
 
 .item-desc {
@@ -122,4 +142,9 @@ p {
 
 #toggle-element {
   display: none;
+}
+
+.item-desc {
+  line-height: 1.7;
+
 }

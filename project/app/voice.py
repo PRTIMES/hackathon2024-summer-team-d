@@ -90,25 +90,31 @@ def combine_audio_files(input_files, output_file, silence_duration=1000):
     
     combined.export(output_file, format="mp3")
 
-# メイン処理
-client = init_openai()
-summaries = summarize_prtimes_bodies(client)
-output_dir = Path(__file__).parent.parent / "static/audio"
-# output_dir = Path(settings.BASE_DIR) / "static/audio"
-output_dir.mkdir(exist_ok=True)
 
-temp_files = []
+def generate_audio():    
+    client = init_openai()
+    summaries = summarize_prtimes_bodies(client)
+    
+    # 挨拶文の追加
+    summaries.insert(0, "本日のプレスリリースをお届けします。")
+    print(summaries)
+    
+    # 保存場所の指定
+    output_dir = Path(__file__).parent.parent / "static/audio"
+    output_dir.mkdir(exist_ok=True)
+    temp_files = []
 
-# 各サンプルテキストを音声ファイルに変換
-for i, summary in enumerate(summaries):
-    temp_file_path = output_dir / f"temp_{i}.mp3"
-    text_to_speech(client, summary, temp_file_path)
-    temp_files.append(temp_file_path)
+    # 各サンプルテキストを音声ファイルに変換
+    for i, summary in enumerate(summaries):
+        temp_file_path = output_dir / f"temp_{i}.mp3"
+        text_to_speech(client, summary, temp_file_path)
+        temp_files.append(temp_file_path)
 
-# 全ての音声ファイルを1つに結合
-final_output_path = output_dir / "combined_output.mp3"
-combine_audio_files(temp_files, final_output_path, silence_duration=2000)
+    # 全ての音声ファイルを1つに結合
+    final_output_path = output_dir / "combined_output.mp3"
+    combine_audio_files(temp_files, final_output_path, silence_duration=2000)
 
-# 一時ファイルを削除
-for file in temp_files:
-    file.unlink()
+    # 一時ファイルを削除
+    for file in temp_files:
+        file.unlink()
+

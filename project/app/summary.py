@@ -58,7 +58,7 @@ def extract_body_from_prtimes():
     return res
 
 
-def summarize_prtimes_bodies():
+def get_releaces_data():
     """
     PR TIMES APIから取得した本文を要約する関数
     """
@@ -68,7 +68,3 @@ def summarize_prtimes_bodies():
     #     # post["items"] = summarize(post["body"])
     
     return res
-
-
-# メイン処理
-# print(summarize_prtimes_bodies())

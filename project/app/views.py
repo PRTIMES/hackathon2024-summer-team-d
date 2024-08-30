@@ -3,13 +3,20 @@ from .jounrnal import get_api_data
 import requests
 from django.http import HttpResponse
 from django.shortcuts import render
-from .summary import summarize_prtimes_bodies
+from .summary import get_releaces_data
+from .voice import generate_audio
 
 # url = settings.MEDIA_URL + "project/app/outputs/summary_0.mp3"
 
 # Create your views here.
 def indexfunc(request):
-    res = summarize_prtimes_bodies()
+    
+    # 記事データ取得
+    res = get_releaces_data()
+    
+    # 音声を生成
+    # generate_audio()
+    
     context = {
         "releases": res,
     }
